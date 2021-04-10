@@ -7,6 +7,9 @@ const app = express();
 
 const mongoose = require('mongoose');
 const axios = require('axios');
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 //This route will be used as an endpoint to interact with Graphql, 
 //All queries will go through this route. 
