@@ -315,6 +315,12 @@ const Mutation = new GraphQLObjectType({
                 topics: { type: new GraphQLList(GraphQLString) },
             },
             async resolve(parent, args) {
+                console.log('#############################');
+                console.log('in addUser');
+                console.log(loginId);
+                console.log(username);
+                console.log(topics);
+
                 try {
                     const user = new User({
                         username: args.username,
@@ -325,6 +331,7 @@ const Mutation = new GraphQLObjectType({
                         selectedTopics: args.topics ? args.topics : [],
                     });
                     const createdUser = await user.save();
+                    console.log('createdUser');
                     // create a stream for the user with some initial nuggets
                     const userStream = new Stream({
                         userId: createdUser.id,
@@ -332,7 +339,9 @@ const Mutation = new GraphQLObjectType({
                         currentPosition: 0,
                     });
                     const createdStream = await userStream.save();
+                    console.log('createdStream');
                     await assembleInitialStream(createdUser, createdStream);
+                    console.log('assembleInitialStream');
                     return createdUser;                 
                 } catch (error) {
                     throw error;
