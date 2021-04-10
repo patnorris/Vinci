@@ -67,3 +67,7 @@ local node env var: https://www.twilio.com/blog/working-with-environment-variabl
 heroku env var: https://devcenter.heroku.com/articles/config-vars
 heroku app needs to use auto-set PORT env var: https://devcenter.heroku.com/articles/dynos#local-environment-variables
 
+load to phone: https://stackoverflow.com/questions/54444538/how-do-i-run-test-my-flutter-app-on-a-real-device
+https://flutter-examples.com/run-test-flutter-apps-directly-on-real-android-device/
+release build: https://flutter.dev/docs/deployment/android
+

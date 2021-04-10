@@ -48,14 +48,6 @@ const server = new ApolloServer({
   context: ({ req }) => context(req),
 });
 
-console.log('################################################');
-console.log('process.env.MONGO_USER');
-console.log(process.env.MONGO_USER);
-console.log('process.env.MONGO_PASSWORD');
-console.log(process.env.MONGO_PASSWORD);
-console.log('process.env.MONGO_DB');
-console.log(process.env.MONGO_DB);
-
 const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.nged9.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
 const options = { useNewUrlParser: true, useUnifiedTopology: true };
 
@@ -63,11 +55,7 @@ const port = process.env.PORT || process.env.GRAPHQL_SERVER_PORT || 4001;
 const path = process.env.GRAPHQL_SERVER_PATH || '/graphql';
 const host = process.env.GRAPHQL_SERVER_HOST || '0.0.0.0';
 
-console.log('################################################');
-
 server.applyMiddleware({ app, path });
-
-console.log('################################################');
 
 mongoose
   .connect(uri, options)
@@ -77,5 +65,3 @@ mongoose
   .catch(error => {
     throw error
   });
-
-console.log('################################################');
