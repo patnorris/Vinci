@@ -1,5 +1,5 @@
 name: client_flutter
-description: Flutter client for GrandStack
+description: Flutter client for Vinci app
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 

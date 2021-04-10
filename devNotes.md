@@ -61,4 +61,9 @@ https://devcenter.heroku.com/articles/getting-started-with-nodejs
 https://github.com/heroku/node-js-getting-started
 https://devcenter.heroku.com/categories/nodejs-support
 https://devcenter.heroku.com/articles/preparing-a-codebase-for-heroku-deployment
+make folder a git repo: https://devcenter.heroku.com/articles/git
+remove env var file from git: https://stackoverflow.com/questions/43762338/how-to-remove-file-from-git-history
+local node env var: https://www.twilio.com/blog/working-with-environment-variables-in-node-js-html
+heroku env var: https://devcenter.heroku.com/articles/config-vars
+heroku app needs to use auto-set PORT env var: https://devcenter.heroku.com/articles/dynos#local-environment-variables
 

@@ -1,4 +1,6 @@
-# graphql-server-setup
-Setup for GraphQL server using Nodejs, Express and MongoDB
+Vinci app initial version
+provides a GraphQL backend written in nodejs (deployed on Heroku)
+connecting to a cloud deployed MongoDB instance (https://cloud.mongodb.com)
+authorizes Auth0 access tokens for queries and mutations to assure account owner is taking the action
 
-Medium article - https://medium.com/@utkarshprakash/setting-up-graphql-server-with-nodejs-express-and-mongodb-d72fba13216
+mutations to populate database with Wikipedia article summaries included

@@ -1,8 +1,10 @@
-# GRANDstack Flutter Client
+Vinci flutter client
 
-A rich native mobile UI for GRANDstack which runs on Android, iOS, and web.
+user authentication with Auth0
+leverages a GraphQL backend
 
-![](../img/grandstack-flutter.png)
+currently, only the Android deploy is tested
+web needs to implement the authentication flow
 
 ## Getting Started
 
@@ -13,6 +15,8 @@ A rich native mobile UI for GRANDstack which runs on Android, iOS, and web.
 3. Run `flutter pub get` to install dependencies.
 
 4. `flutter run` to launch your app in debug mode. Or use the Flutter tools in your IDE.
+e.g. flutter run -d emulator-5554 (for Android Studio > AVD Manager > run emulator)
+flutter run -d chrome (web, opens Chrome window)
 
 ## Build
 

@@ -1,7 +1,7 @@
 {
   "name": "nuggetsofgold",
   "version": "0.0.1",
-  "description": "",
+  "description": "Vinci app backend",
   "main": "index.js",
   "engines": {
     "node": "12.18.3"
