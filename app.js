@@ -59,7 +59,7 @@ console.log(process.env.MONGO_DB);
 const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.nged9.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
 const options = { useNewUrlParser: true, useUnifiedTopology: true };
 
-const port = process.env.GRAPHQL_SERVER_PORT || 4001;
+const port = process.env.PORT || process.env.GRAPHQL_SERVER_PORT || 4001;
 const path = process.env.GRAPHQL_SERVER_PATH || '/graphql';
 const host = process.env.GRAPHQL_SERVER_HOST || '0.0.0.0';
 
