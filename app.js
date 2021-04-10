@@ -63,7 +63,11 @@ const port = process.env.GRAPHQL_SERVER_PORT || 4001;
 const path = process.env.GRAPHQL_SERVER_PATH || '/graphql';
 const host = process.env.GRAPHQL_SERVER_HOST || '0.0.0.0';
 
+console.log('################################################');
+
 server.applyMiddleware({ app, path });
+
+console.log('################################################');
 
 mongoose
   .connect(uri, options)
@@ -73,3 +77,5 @@ mongoose
   .catch(error => {
     throw error
   });
+
+console.log('################################################');
