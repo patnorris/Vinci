@@ -48,6 +48,14 @@ const server = new ApolloServer({
   context: ({ req }) => context(req),
 });
 
+console.log('################################################');
+console.log('process.env.MONGO_USER');
+console.log(process.env.MONGO_USER);
+console.log('process.env.MONGO_PASSWORD');
+console.log(process.env.MONGO_PASSWORD);
+console.log('process.env.MONGO_DB');
+console.log(process.env.MONGO_DB);
+
 const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.nged9.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
 const options = { useNewUrlParser: true, useUnifiedTopology: true };
 
