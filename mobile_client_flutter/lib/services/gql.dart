@@ -35,7 +35,8 @@ ValueNotifier<GraphQLClient> client = ValueNotifier(
   GraphQLClient(
     cache: InMemoryCache(),
     link: authLink.concat(HttpLink(
-      uri: 'http://$host:4001/graphql',
+      //uri: 'http://$host:4001/graphql',
+      uri: 'https://vinci-nuggetsofgold-app.herokuapp.com/graphql',
       /* headers: <String, String>{
         'Authorization': 'Bearer ${}',
       }, */
