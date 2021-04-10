@@ -1,0 +1,32 @@
+{
+  "name": "nuggetsofgold",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": "12.18.3"
+  },
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "dependencies": {
+    "apollo-server": "^2.14.2",
+    "axios": "^0.21.1",
+    "express": "^4.16.4",
+    "express-graphql": "^0.7.1",
+    "graphql": "^14.1.1",
+    "mongoose": "^5.12.3",
+    "nodemw": "^0.14.0",
+    "request": "^2.67.0",
+    "wikijs": "^6.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  }
+}
