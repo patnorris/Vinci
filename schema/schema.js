@@ -1,6 +1,4 @@
 const graphql = require('graphql');
-const Book = require('../models/book');
-const Author = require('../models/Author');
 const User = require('../models/User');
 const Stream = require('../models/Stream');
 const Nugget = require('../models/Nugget');
