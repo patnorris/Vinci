@@ -53,7 +53,7 @@ class _MyAppState extends State<MyApp> {
     return GraphQLProvider(
       client: client,
       child: MaterialApp(
-        title: 'Nuggets of Gold',
+        title: 'Vinci',
         theme: ThemeData(
           primarySwatch: Colors.indigo,
           accentColor: Colors.pinkAccent,
@@ -351,6 +351,8 @@ class WelcomePageState extends State<WelcomePage> {
           body = CreateUserProfileMutationScreen(loginId: loginId);
 
           return Scaffold(
+            backgroundColor: Colors.indigo[100],
+            resizeToAvoidBottomInset: false,
             appBar: AppBar(
               title: Text("Welcome to Vinci"),
             ),

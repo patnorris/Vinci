@@ -112,7 +112,7 @@ class UserSavedNuggetsScreen extends StatelessWidget {
                     title: Text(user.savedNuggets[index].nuggetType),
                     trailing: Text(content.length <= 36
                         ? content
-                        : content.substring(0, 36)),
+                        : content.substring(0, 30)),
                     onTap: () {
                       Navigator.push(
                         context,

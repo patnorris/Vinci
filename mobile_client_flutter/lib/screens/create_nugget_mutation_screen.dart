@@ -33,6 +33,7 @@ class CreateNuggetScreen extends StatelessWidget {
       length: 1,
       child: Scaffold(
         backgroundColor: Colors.indigo[100],
+        resizeToAvoidBottomInset: false,
         appBar:
             AppBar(title: Text('Create a New Nugget to Share Your Learnings')),
         drawer: MenuDrawer(logoutAction: logoutAction),

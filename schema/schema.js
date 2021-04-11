@@ -317,9 +317,9 @@ const Mutation = new GraphQLObjectType({
             async resolve(parent, args) {
                 console.log('#############################');
                 console.log('in addUser');
-                console.log(loginId);
-                console.log(username);
-                console.log(topics);
+                console.log(args.loginId);
+                console.log(args.username);
+                console.log(args.topics);
 
                 try {
                     const user = new User({

@@ -42,6 +42,7 @@ flutter:
     - assets/images/
 
 flutter_icons:
-  android: "launcher_icon"
-  ios: true
-  image_path: "assets/icons/grandstack_icon.png"
+  image_path: "assets/icons/Vinci_logo_version2.png"
+  #android: "launcher_icon"
+  android: true
+  ios: true  
