@@ -240,12 +240,17 @@ const RootQuery = new GraphQLObjectType({
             type: UserType,
             args: { loginId: { type: GraphQLString } },
             resolve(parent, args, context) {
+                console.log('in userByLoginId');
+                console.log(args.loginId);
+                console.log(context.loggedInUser.nickname);
                 // secure query
                 // only user themself can retrieve
                 if (args.loginId === context.loggedInUser.nickname) {
+                    console.log('in if');
                     // if no entry found, null will be returned (i.e. new user)
                     return User.findOne({ loginId: args.loginId });
                 }
+                console.log('after if');
                 return null;
             }
         },

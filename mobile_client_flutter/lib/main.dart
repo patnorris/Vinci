@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:client_flutter/screens/create_nugget_mutation_screen.dart';
 import 'package:client_flutter/screens/user_profile_screen.dart';
@@ -191,6 +192,44 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
+  Future<void> checkInternetConnection() async {
+    try {
+      final result = await InternetAddress.lookup('example.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected');
+        print(result);
+        return;
+      } else {
+        return showDialog(
+            //barrierColor: Colors.white.withOpacity(0),
+            barrierColor: Colors.transparent,
+            context: context,
+            builder: (BuildContext builderContext) {
+              return AlertDialog(
+                backgroundColor: Colors.white,
+                title: Text('Vinci cannot connect'),
+                content: Text(
+                    "Please make sure you've got an active Internet connection"),
+              );
+            });
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      return showDialog(
+          //barrierColor: Colors.white.withOpacity(0),
+          barrierColor: Colors.transparent,
+          context: context,
+          builder: (BuildContext builderContext) {
+            return AlertDialog(
+              backgroundColor: Colors.white,
+              title: Text('Vinci cannot connect'),
+              content: Text(
+                  "Please make sure you've got an active Internet connection"),
+            );
+          });
+    }
+  }
+
   Future<void> initAction() async {
     final String storedRefreshToken =
         await secureStorage.read(key: 'refresh_token');
@@ -266,7 +305,8 @@ class Login extends StatelessWidget {
               },
               child: Text('Login'),
             ),
-            Text(loginError ?? ''),
+            Text(loginError ??
+                "Please make sure you're connected to the Internet"),
           ],
         )));
   }
@@ -326,6 +366,8 @@ class WelcomePageState extends State<WelcomePage> {
           FetchMore fetchMore,
         }) {
           Widget body;
+          print("loginId");
+          print(loginId);
 
           if (result.hasException) {
             return AlertBox(
@@ -338,26 +380,32 @@ class WelcomePageState extends State<WelcomePage> {
               child: CircularProgressIndicator(),
             );
           } else {
+            print("##############################");
+            print(result.data);
             if (result.data['userByLoginId'] != null) {
               user = User.fromJson(result.data['userByLoginId']);
+              print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+              print(user);
               if (user != null) {
                 return UserStreamScreen(
                     loginId: loginId, logoutAction: logoutAction);
               }
+            } else {
+              print("---------------------------------");
+              print(result.data);
+              // new user; initiate sign up flow
+              body = CreateUserProfileMutationScreen(loginId: loginId);
+
+              return Scaffold(
+                backgroundColor: Colors.indigo[100],
+                resizeToAvoidBottomInset: false,
+                appBar: AppBar(
+                  title: Text("Welcome to Vinci"),
+                ),
+                body: body,
+              );
             }
           }
-
-          // new user; initiate sign up flow
-          body = CreateUserProfileMutationScreen(loginId: loginId);
-
-          return Scaffold(
-            backgroundColor: Colors.indigo[100],
-            resizeToAvoidBottomInset: false,
-            appBar: AppBar(
-              title: Text("Welcome to Vinci"),
-            ),
-            body: body,
-          );
         });
   }
 }
