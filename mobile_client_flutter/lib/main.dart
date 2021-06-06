@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:client_flutter/screens/create_nugget_mutation_screen.dart';
+// import 'package:client_flutter/screens/create_nugget_mutation_screen.dart';
 import 'package:client_flutter/screens/user_profile_screen.dart';
 import 'package:client_flutter/screens/user_saved_nuggets_screen.dart';
 import 'package:client_flutter/screens/user_selected_topics_screen.dart';
@@ -69,8 +69,8 @@ class _MyAppState extends State<MyApp> {
               UserProfileScreen(loginId: loginId, logoutAction: logoutAction),
           '/saved': (context) => UserSavedNuggetsScreen(
               loginId: loginId, logoutAction: logoutAction),
-          '/create': (context) =>
-              CreateNuggetScreen(loginId: loginId, logoutAction: logoutAction),
+          /* '/create': (context) =>
+              CreateNuggetScreen(loginId: loginId, logoutAction: logoutAction), */
           '/topics': (context) => UserSelectedTopicsScreen(
               loginId: loginId, logoutAction: logoutAction),
         },

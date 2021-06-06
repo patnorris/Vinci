@@ -404,26 +404,30 @@ const Mutation = new GraphQLObjectType({
             },
             async resolve(parent, args) {
                 try {
-                    const creator = await User.findOne({ loginId: args.creatorId });
-                    const nugget = new Nugget({
-                        creatorId: creator.id,
-                        nuggetType: args.nuggetType,
-                        content: args.content,
-                        source: args.source,
-                        topics: [args.topic],
-                    });
-                    const createdNugget = await nugget.save();
-                    await Stream.findOneAndUpdate(
-                        { userId: creator.id }, 
-                        { $push: { nuggetIds: createdNugget.id } },
-                       /* function (error, success) {
-                             if (error) {
-                                 console.log(error);
-                             } else {
-                                 console.log(success);
-                             } 
-                         } */);
-                    return createdNugget;                 
+                    if(summary.length >= 10) { // prevent empty nuggets from being added
+                        const creator = await User.findOne({ loginId: args.creatorId });
+                        const nugget = new Nugget({
+                            creatorId: creator.id,
+                            nuggetType: args.nuggetType,
+                            content: args.content,
+                            source: args.source,
+                            topics: [args.topic],
+                        });
+                        const createdNugget = await nugget.save();
+                        await Stream.findOneAndUpdate(
+                            { userId: creator.id }, 
+                            { $push: { nuggetIds: createdNugget.id } },
+                        /* function (error, success) {
+                                if (error) {
+                                    console.log(error);
+                                } else {
+                                    console.log(success);
+                                } 
+                            } */);
+                        return createdNugget;
+                    } else {
+                        return "Not sure much can be learned from an empty nugget."
+                    }               
                 } catch (error) {
                     throw error;
                 } 
@@ -527,34 +531,36 @@ const Mutation = new GraphQLObjectType({
                                 const randomTopic = getLast(decodeURI(response.req.path)).split("_").join(" ");
                                 try {
                                     const summary = await wiki().page(randomTopic).then(page => page.summary());
-                                    if(args.creatorId) {
-                                        const nugget = new Nugget({
-                                            creatorId: args.creatorId,
-                                            nuggetType: "TEXT",
-                                            content: summary,
-                                            source: 'https://en.wikipedia.org'+response.req.path,
-                                        });
-                                        const createdNugget = await nugget.save();
-                                        await Stream.findOneAndUpdate(
-                                        { userId: args.creatorId }, 
-                                        { $push: { nuggetIds: createdNugget.id } },
-                                    /* function (error, success) {
-                                            if (error) {
-                                                console.log(error);
-                                            } else {
-                                                console.log(success);
-                                            } 
-                                        } */);
-                                } else {
-                                    const nugget = new Nugget({
-                                        creatorId: "60597211bb1ffb28389ee9e0",
-                                        nuggetType: "TEXT",
-                                        content: summary,
-                                        source: 'https://en.wikipedia.org'+response.req.path,
-                                    });
-                                    const createdNugget = await nugget.save();
-                                }                              
-                                //return summary;                               
+                                    if(summary.length >= 10) { // prevent empty nuggets from being added
+                                        if(args.creatorId) {
+                                            const nugget = new Nugget({
+                                                creatorId: args.creatorId,
+                                                nuggetType: "TEXT",
+                                                content: summary,
+                                                source: 'https://en.wikipedia.org'+response.req.path,
+                                            });
+                                            const createdNugget = await nugget.save();
+                                            await Stream.findOneAndUpdate(
+                                            { userId: args.creatorId }, 
+                                            { $push: { nuggetIds: createdNugget.id } },
+                                            /* function (error, success) {
+                                                if (error) {
+                                                    console.log(error);
+                                                } else {
+                                                    console.log(success);
+                                                } 
+                                            } */);
+                                        } else {
+                                            const nugget = new Nugget({
+                                                creatorId: "60597211bb1ffb28389ee9e0",
+                                                nuggetType: "TEXT",
+                                                content: summary,
+                                                source: 'https://en.wikipedia.org'+response.req.path,
+                                            });
+                                            const createdNugget = await nugget.save();
+                                        }                              
+                                        //return summary; 
+                                    }                              
                                 } catch (err) {
                                     console.log('##########################err in wiki()##########################');  
                                     console.log(err);        
@@ -603,38 +609,40 @@ const Mutation = new GraphQLObjectType({
                                 const topics = categories.map(category => category.replace("Category:", "").replace("_", " "));
                                 const url = await page.url();
                                 console.log(index);
-                                if(args.creatorId) {
-                                    const nugget = new Nugget({
-                                        creatorId: args.creatorId,
-                                        nuggetType: "TEXT",
-                                        content: summary,
-                                        //source: 'https://en.wikipedia.org'+response.req.path,
-                                        source: url,
-                                        topics: topics,
-                                    });
-                                    const createdNugget = await nugget.save();
-                                    await Stream.findOneAndUpdate(
-                                    { userId: args.creatorId }, 
-                                    { $push: { nuggetIds: createdNugget.id } },
-                                /* function (error, success) {
-                                        if (error) {
-                                            console.log(error);
-                                        } else {
-                                            console.log(success);
-                                        } 
-                                    } */);
-                            } else {
-                                const nugget = new Nugget({
-                                    creatorId: "60597211bb1ffb28389ee9e0",
-                                    nuggetType: "TEXT",
-                                    content: summary,
-                                    //source: 'https://en.wikipedia.org'+response.req.path,
-                                    source: url,
-                                    topics: topics,
-                                });
-                                const createdNugget = await nugget.save();
-                            }                              
-                            //return summary;                               
+                                if(summary.length >= 10) { // prevent empty nuggets from being added
+                                    if(args.creatorId) {
+                                        const nugget = new Nugget({
+                                            creatorId: args.creatorId,
+                                            nuggetType: "TEXT",
+                                            content: summary,
+                                            //source: 'https://en.wikipedia.org'+response.req.path,
+                                            source: url,
+                                            topics: topics,
+                                        });
+                                        const createdNugget = await nugget.save();
+                                        await Stream.findOneAndUpdate(
+                                        { userId: args.creatorId }, 
+                                        { $push: { nuggetIds: createdNugget.id } },
+                                    /* function (error, success) {
+                                            if (error) {
+                                                console.log(error);
+                                            } else {
+                                                console.log(success);
+                                            } 
+                                        } */);
+                                    } else {
+                                        const nugget = new Nugget({
+                                            creatorId: "60597211bb1ffb28389ee9e0",
+                                            nuggetType: "TEXT",
+                                            content: summary,
+                                            //source: 'https://en.wikipedia.org'+response.req.path,
+                                            source: url,
+                                            topics: topics,
+                                        });
+                                        const createdNugget = await nugget.save();
+                                    }                              
+                                    //return summary; 
+                                }                              
                             } catch (err) {
                                 console.log('##########################err in wiki()##########################');  
                                 console.log(err);        

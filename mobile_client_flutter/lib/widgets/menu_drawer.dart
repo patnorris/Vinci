@@ -89,7 +89,7 @@ class MenuDrawer extends StatelessWidget {
               Navigator.pushReplacementNamed(context, '/saved');
             },
           ),
-          ListTile(
+          /* ListTile(
             leading: Icon(Icons.create),
             title: Text(
               'Create Nugget',
@@ -100,7 +100,7 @@ class MenuDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pushReplacementNamed(context, '/create');
             },
-          ),
+          ), */
           ListTile(
             leading: Icon(Icons.logout),
             title: Text(

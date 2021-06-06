@@ -22,21 +22,20 @@ if (process.env.NODE_ENV !== 'production') {
 })); */
 
 const AUTH0_DOMAIN = 'dev-elgwq523.us.auth0.com';
-let loggedInUser = null;
+let loggedInUsers = {}; // TODO: probably a better option is needed to accomplish this
 
 const context = async req => {
   try {
-    if (!loggedInUser) {
+    if (!loggedInUsers[req.headers.authorization]) {
       const url = `https://${AUTH0_DOMAIN}/userinfo`;
       const response = await axios.get(url, { headers: { Authorization: `${req.headers.authorization}` } });
-      loggedInUser = response.data;
+      loggedInUsers[req.headers.authorization] = response.data;
     }    
-    return { loggedInUser: loggedInUser };
+    return { loggedInUser: loggedInUsers[req.headers.authorization] };
   } catch (error) {
     console.log('error in context');
     console.log(error);
   }
-
   return { };
 };
 
