@@ -240,17 +240,17 @@ const RootQuery = new GraphQLObjectType({
             type: UserType,
             args: { loginId: { type: GraphQLString } },
             resolve(parent, args, context) {
-                console.log('in userByLoginId');
-                console.log(args.loginId);
-                console.log(context.loggedInUser.nickname);
+                // console.log('in userByLoginId');
+                // console.log(args.loginId);
+                // console.log(context.loggedInUser.nickname);
                 // secure query
                 // only user themself can retrieve
                 if (args.loginId === context.loggedInUser.nickname) {
-                    console.log('in if');
+                    // console.log('in if');
                     // if no entry found, null will be returned (i.e. new user)
                     return User.findOne({ loginId: args.loginId });
                 }
-                console.log('after if');
+                // console.log('after if');
                 return null;
             }
         },
@@ -322,9 +322,9 @@ const Mutation = new GraphQLObjectType({
             async resolve(parent, args) {
                 console.log('#############################');
                 console.log('in addUser');
-                console.log(args.loginId);
+                // console.log(args.loginId);
                 console.log(args.username);
-                console.log(args.topics);
+                // console.log(args.topics);
 
                 try {
                     const user = new User({
@@ -336,7 +336,7 @@ const Mutation = new GraphQLObjectType({
                         selectedTopics: args.topics ? args.topics : [],
                     });
                     const createdUser = await user.save();
-                    console.log('createdUser');
+                    // console.log('createdUser');
                     // create a stream for the user with some initial nuggets
                     const userStream = new Stream({
                         userId: createdUser.id,
@@ -344,9 +344,9 @@ const Mutation = new GraphQLObjectType({
                         currentPosition: 0,
                     });
                     const createdStream = await userStream.save();
-                    console.log('createdStream');
+                    // console.log('createdStream');
                     await assembleInitialStream(createdUser, createdStream);
-                    console.log('assembleInitialStream');
+                    // console.log('assembleInitialStream');
                     return createdUser;                 
                 } catch (error) {
                     throw error;

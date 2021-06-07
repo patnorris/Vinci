@@ -160,10 +160,16 @@ class _MyAppState extends State<MyApp> {
           key: 'refresh_token', value: result.refreshToken);
       await secureStorage.write(key: 'access_token', value: result.accessToken);
 
+      var loginId = idToken['name'];
+      if (idToken['sub'].toString().contains('google')) {
+        // is login via Google and loginId needs to be constructed
+        loginId = idToken['nickname'].toString() + '@gmail.com';
+      }
+
       setState(() {
         isBusy = false;
         isLoggedIn = true;
-        loginId = idToken['nickname'];
+        loginId = loginId;
         //picture = profile['picture'];
       });
     } on Exception catch (e, s) {
@@ -197,7 +203,7 @@ class _MyAppState extends State<MyApp> {
       final result = await InternetAddress.lookup('example.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('connected');
-        print(result);
+        // print(result);
         return;
       } else {
         return showDialog(
@@ -366,9 +372,6 @@ class WelcomePageState extends State<WelcomePage> {
           FetchMore fetchMore,
         }) {
           Widget body;
-          print("loginId");
-          print(loginId);
-
           if (result.hasException) {
             return AlertBox(
               type: AlertType.error,
@@ -380,19 +383,13 @@ class WelcomePageState extends State<WelcomePage> {
               child: CircularProgressIndicator(),
             );
           } else {
-            print("##############################");
-            print(result.data);
             if (result.data['userByLoginId'] != null) {
               user = User.fromJson(result.data['userByLoginId']);
-              print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-              print(user);
               if (user != null) {
                 return UserStreamScreen(
                     loginId: loginId, logoutAction: logoutAction);
               }
             } else {
-              print("---------------------------------");
-              print(result.data);
               // new user; initiate sign up flow
               body = CreateUserProfileMutationScreen(loginId: loginId);
 
