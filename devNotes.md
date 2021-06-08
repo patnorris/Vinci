@@ -70,4 +70,5 @@ heroku app needs to use auto-set PORT env var: https://devcenter.heroku.com/arti
 load to phone: https://stackoverflow.com/questions/54444538/how-do-i-run-test-my-flutter-app-on-a-real-device
 https://flutter-examples.com/run-test-flutter-apps-directly-on-real-android-device/
 release build: https://flutter.dev/docs/deployment/android
+run release mode: https://stackoverflow.com/questions/56179353/app-running-on-debug-mode-only-for-flutter
 

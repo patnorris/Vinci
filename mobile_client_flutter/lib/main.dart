@@ -165,6 +165,8 @@ class _MyAppState extends State<MyApp> {
         // is login via Google and loginId needs to be constructed
         loginId = idToken['nickname'].toString() + '@gmail.com';
       }
+      print('loginId');
+      print(loginId);
 
       setState(() {
         isBusy = false;
@@ -262,10 +264,18 @@ class _MyAppState extends State<MyApp> {
       await secureStorage.write(
           key: 'access_token', value: response.accessToken);
 
+      var loginId = idToken['name'];
+      if (idToken['sub'].toString().contains('google')) {
+        // is login via Google and loginId needs to be constructed
+        loginId = idToken['nickname'].toString() + '@gmail.com';
+      }
+      print('loginId');
+      print(loginId);
+
       setState(() {
         isBusy = false;
         isLoggedIn = true;
-        loginId = idToken['nickname'];
+        loginId = loginId;
         //picture = profile['picture'];
       });
     } on Exception catch (e, s) {

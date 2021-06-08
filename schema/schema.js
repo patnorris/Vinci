@@ -230,7 +230,7 @@ const RootQuery = new GraphQLObjectType({
                 // secure query
                 // only user themself can retrieve
                 const requestedUser = await User.findById(args.id);;
-                if (requestedUser.loginId === context.loggedInUser.nickname) {
+                if (requestedUser.loginId === context.loggedInUser.name) {
                     return requestedUser
                 }
                 return null;
@@ -242,10 +242,10 @@ const RootQuery = new GraphQLObjectType({
             resolve(parent, args, context) {
                 // console.log('in userByLoginId');
                 // console.log(args.loginId);
-                // console.log(context.loggedInUser.nickname);
+                // console.log(context.loggedInUser.name);
                 // secure query
                 // only user themself can retrieve
-                if (args.loginId === context.loggedInUser.nickname) {
+                if (args.loginId === context.loggedInUser.name) {
                     // console.log('in if');
                     // if no entry found, null will be returned (i.e. new user)
                     return User.findOne({ loginId: args.loginId });
@@ -364,7 +364,7 @@ const Mutation = new GraphQLObjectType({
                 // only user themself can mutate
                 try {
                     const updatedUser = await User.findOneAndUpdate(
-                        { _id: args.userId, loginId: context.loggedInUser.nickname }, 
+                        { _id: args.userId, loginId: context.loggedInUser.name }, 
                         { username: args.username },
                     );
                     return updatedUser;                 
@@ -384,7 +384,7 @@ const Mutation = new GraphQLObjectType({
                 // only user themself can mutate
                 try {
                     const updatedUser = await User.findOneAndUpdate(
-                        { _id: args.userId, loginId: context.loggedInUser.nickname }, 
+                        { _id: args.userId, loginId: context.loggedInUser.name }, 
                         { selectedTopics: args.topics },
                     );
                     return updatedUser;                 
@@ -444,7 +444,7 @@ const Mutation = new GraphQLObjectType({
                 // only user themself can mutate
                 try {
                     const updatedUser = await User.findOneAndUpdate(
-                        { _id: args.userId, loginId: context.loggedInUser.nickname }, 
+                        { _id: args.userId, loginId: context.loggedInUser.name }, 
                         { $addToSet: { savedNuggetIds: args.nuggetId } },
                     );
                     return updatedUser;                 
@@ -464,7 +464,7 @@ const Mutation = new GraphQLObjectType({
                 // only user themself can mutate
                 try {
                     const updatedUser = await User.findOneAndUpdate(
-                        { _id: args.userId, loginId: context.loggedInUser.nickname }, 
+                        { _id: args.userId, loginId: context.loggedInUser.name }, 
                         { $pull: { savedNuggetIds: args.nuggetId } },
                     );
                     return updatedUser;                 
