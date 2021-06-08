@@ -160,8 +160,11 @@ class _MyAppState extends State<MyApp> {
           key: 'refresh_token', value: result.refreshToken);
       await secureStorage.write(key: 'access_token', value: result.accessToken);
 
+      print('idToken');
+      print(idToken);
       var loginId = idToken['name'];
       if (idToken['sub'].toString().contains('google')) {
+        print('if idToken[sub]');
         // is login via Google and loginId needs to be constructed
         loginId = idToken['nickname'].toString() + '@gmail.com';
       }
