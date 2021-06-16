@@ -582,8 +582,12 @@ const Mutation = new GraphQLObjectType({
             args: {
                 creatorId: { type: GraphQLID },
                 category: { type: GraphQLString },
+                pass: { type: GraphQLString },
             },
             async resolve(parent, args) {
+                if (args.pass !== "TIGH.touc5frad5day") {
+                    return null;
+                }
                 try {
                     const pagesInCategory = await wiki().pagesInCategory("Category:Nuclear_technology");
                     /* const page = await wiki().page(pagesInCategory[0]);
