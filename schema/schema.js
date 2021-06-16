@@ -406,7 +406,7 @@ const Mutation = new GraphQLObjectType({
             },
             async resolve(parent, args) {
                 try {
-                    if(content.length >= 10 && args.creatorId === context.loggedInUser.name) { // prevent empty nuggets from being added
+                    if(args.content.length >= 10 && args.creatorId === context.loggedInUser.name) { // prevent empty nuggets from being added
                         const creator = await User.findOne({ loginId: args.creatorId });
                         const nugget = new Nugget({
                             creatorId: creator.id,
