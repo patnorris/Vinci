@@ -515,8 +515,12 @@ const Mutation = new GraphQLObjectType({
             type: GraphQLString,
             args: {
                 creatorId: { type: GraphQLID },
+                pass: { type: GraphQLString },
             },
             async resolve(parent, args) {
+                if (args.pass !== "fruf*VOOB2boos9lat") {
+                    return null;
+                }
                 try {
                     for (let index = 0; index < 5; index++) {
                         const requestOpts = {
