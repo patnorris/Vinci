@@ -240,13 +240,13 @@ const RootQuery = new GraphQLObjectType({
             type: UserType,
             args: { loginId: { type: GraphQLString } },
             resolve(parent, args, context) {
-                console.log('in userByLoginId');
-                console.log(args.loginId);
-                console.log(context.loggedInUser.name);
+                // console.log('in userByLoginId');
+                // console.log(args.loginId);
+                // console.log(context.loggedInUser.name);
                 // secure query
                 // only user themself can retrieve
                 if (args.loginId === context.loggedInUser.name) {
-                    console.log('in if');
+                    // console.log('in if');
                     // if no entry found, null will be returned (i.e. new user)
                     return User.findOne({ loginId: args.loginId });
                 }
@@ -325,32 +325,34 @@ const Mutation = new GraphQLObjectType({
                 // console.log(args.loginId);
                 console.log(args.username);
                 // console.log(args.topics);
-
-                try {
-                    const user = new User({
-                        username: args.username,
-                        loginId: args.loginId,
-                        savedNuggetIds: [],
-                        seenNuggetIds: [],
-                        likedNuggetIds: [],
-                        selectedTopics: args.topics ? args.topics : [],
-                    });
-                    const createdUser = await user.save();
-                    // console.log('createdUser');
-                    // create a stream for the user with some initial nuggets
-                    const userStream = new Stream({
-                        userId: createdUser.id,
-                        nuggetIds: [],
-                        currentPosition: 0,
-                    });
-                    const createdStream = await userStream.save();
-                    // console.log('createdStream');
-                    await assembleInitialStream(createdUser, createdStream);
-                    // console.log('assembleInitialStream');
-                    return createdUser;                 
-                } catch (error) {
-                    throw error;
-                } 
+                if (args.loginId === context.loggedInUser.name) {
+                    try {
+                        const user = new User({
+                            username: args.username,
+                            loginId: args.loginId,
+                            savedNuggetIds: [],
+                            seenNuggetIds: [],
+                            likedNuggetIds: [],
+                            selectedTopics: args.topics ? args.topics : [],
+                        });
+                        const createdUser = await user.save();
+                        // console.log('createdUser');
+                        // create a stream for the user with some initial nuggets
+                        const userStream = new Stream({
+                            userId: createdUser.id,
+                            nuggetIds: [],
+                            currentPosition: 0,
+                        });
+                        const createdStream = await userStream.save();
+                        // console.log('createdStream');
+                        await assembleInitialStream(createdUser, createdStream);
+                        // console.log('assembleInitialStream');
+                        return createdUser;                 
+                    } catch (error) {
+                        throw error;
+                    }
+                }
+                return null; 
             }
         },
         editUserProfile: {
@@ -404,7 +406,7 @@ const Mutation = new GraphQLObjectType({
             },
             async resolve(parent, args) {
                 try {
-                    if(summary.length >= 10) { // prevent empty nuggets from being added
+                    if(summary.length >= 10 && args.creatorId === context.loggedInUser.name) { // prevent empty nuggets from being added
                         const creator = await User.findOne({ loginId: args.creatorId });
                         const nugget = new Nugget({
                             creatorId: creator.id,
@@ -482,7 +484,7 @@ const Mutation = new GraphQLObjectType({
             async resolve(parent, args) {
                 try {
                     const updatedUser = await User.findOneAndUpdate(
-                        { _id: args.userId }, 
+                        { _id: args.userId, loginId: context.loggedInUser.name }, 
                         { $addToSet: { seenNuggetIds: args.nuggetId } },
                     );
                     return updatedUser;                 
@@ -500,7 +502,7 @@ const Mutation = new GraphQLObjectType({
             async resolve(parent, args) {
                 try {
                     const updatedUser = await User.findOneAndUpdate(
-                        { _id: args.userId }, 
+                        { _id: args.userId, loginId: context.loggedInUser.name }, 
                         { $addToSet: { seenNuggetIds: args.nuggetId, likedNuggetIds: args.nuggetId } },
                     );
                     return updatedUser;                 
