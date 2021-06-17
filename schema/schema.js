@@ -322,10 +322,12 @@ const Mutation = new GraphQLObjectType({
             async resolve(parent, args) {
                 console.log('#############################');
                 console.log('in addUser');
-                // console.log(args.loginId);
+                console.log(args.loginId);
                 console.log(args.username);
-                // console.log(args.topics);
+                console.log(args.topics);
+                console.log(context.loggedInUser.name);
                 if (args.loginId === context.loggedInUser.name) {
+                    console.log('in addUser if');
                     try {
                         const user = new User({
                             username: args.username,
@@ -336,7 +338,7 @@ const Mutation = new GraphQLObjectType({
                             selectedTopics: args.topics ? args.topics : [],
                         });
                         const createdUser = await user.save();
-                        // console.log('createdUser');
+                        console.log('createdUser');
                         // create a stream for the user with some initial nuggets
                         const userStream = new Stream({
                             userId: createdUser.id,
@@ -344,11 +346,13 @@ const Mutation = new GraphQLObjectType({
                             currentPosition: 0,
                         });
                         const createdStream = await userStream.save();
-                        // console.log('createdStream');
+                        console.log('createdStream');
                         await assembleInitialStream(createdUser, createdStream);
-                        // console.log('assembleInitialStream');
+                        console.log('assembleInitialStream');
                         return createdUser;                 
                     } catch (error) {
+                        console.log('error in addUser');
+                        console.log(error);
                         throw error;
                     }
                 }

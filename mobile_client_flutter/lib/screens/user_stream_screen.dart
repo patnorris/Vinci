@@ -130,7 +130,7 @@ class UserStreamScreen extends StatelessWidget {
             return fetchMoreResultData;
           },
         );
-
+        print('UserStreamScreen');
         if (result.hasException) {
           body = AlertBox(
             type: AlertType.error,
@@ -142,6 +142,8 @@ class UserStreamScreen extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else {
+          print('UserStreamScreen result.data');
+          print(result.data);
           user = User.fromJson(result.data['userByLoginId']);
           //final Map pageInfo = result.data['pageInfo'];
           //print(result.data);

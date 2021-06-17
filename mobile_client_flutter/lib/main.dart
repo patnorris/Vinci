@@ -387,6 +387,8 @@ class WelcomePageState extends State<WelcomePage> {
               child: CircularProgressIndicator(),
             );
           } else {
+            print('WelcomePageState result.data');
+            print(result.data);
             if (result.data['userByLoginId'] != null) {
               user = User.fromJson(result.data['userByLoginId']);
               if (user != null) {
@@ -394,6 +396,7 @@ class WelcomePageState extends State<WelcomePage> {
                     loginId: loginId, logoutAction: logoutAction);
               }
             } else {
+              print('WelcomePageState new user');
               // new user; initiate sign up flow
               body = CreateUserProfileMutationScreen(loginId: loginId);
 
@@ -452,6 +455,7 @@ class CreateUserProfileMutationScreen extends StatelessWidget {
           RunMutation runMutation,
           QueryResult result,
         ) {
+          print('CreateUserProfileMutationScreen');
           List<String> availableTopics = getAvailableTopics();
           final _items = availableTopics
               .map((topic) => MultiSelectItem<String>(topic, topic))
@@ -519,6 +523,10 @@ provide you a mix of everything worth learning""";
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
                             // run mutation to create User profile in DB
+                            print('before creating user loginId');
+                            print(loginId);
+                            print(formData['username']);
+                            print(selectedTopics);
                             runMutation({
                               'loginId': loginId,
                               'username': formData['username'],
