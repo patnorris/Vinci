@@ -31,7 +31,7 @@ const context = async req => {
       const response = await axios.get(url, { headers: { Authorization: `${req.headers.authorization}` } });
       loggedInUsers[req.headers.authorization] = response.data;
     }
-    console.log('loggedInUsers[req.headers.authorization]');
+    console.log('in context loggedInUsers[req.headers.authorization]');
     console.log(loggedInUsers[req.headers.authorization]);  
     return { loggedInUser: loggedInUsers[req.headers.authorization] };
   } catch (error) {

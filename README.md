@@ -8,7 +8,7 @@ mutations to populate database with Wikipedia article summaries included
 Update deployed nodejs app on Heroku:
 git add .
 git commit -m ""
-heroku login
+( heroku login )
 git push heroku master
 
 heroku logs --tail

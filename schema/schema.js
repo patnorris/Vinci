@@ -27,7 +27,7 @@ const UserType = new GraphQLObjectType({
         modifiedAt: { type: GraphQLString },
         stream: {
             type: StreamType,
-            async resolve(parent, args){
+            async resolve(parent, args, context){
                 const streamEntry = (await Stream.find({ userId: parent.id }))[0];
                 //streamEntry.user = await User.findById(streamEntry.userId);
                 return streamEntry;
@@ -35,7 +35,7 @@ const UserType = new GraphQLObjectType({
         },
         savedNuggets: {
             type: new GraphQLList(NuggetType),
-            async resolve(parent, args){ //TODO: paginate
+            async resolve(parent, args, context){ //TODO: paginate
                 const user = await User.findById(parent.id);
                 return user.savedNuggetIds.map(nuggetId => {
                     return Nugget.findById(nuggetId);
@@ -44,7 +44,7 @@ const UserType = new GraphQLObjectType({
         },
         seenNuggets: {
             type: new GraphQLList(NuggetType),
-            async resolve(parent, args){ //TODO: paginate
+            async resolve(parent, args, context){ //TODO: paginate
                 const user = await User.findById(parent.id);
                 return user.seenNuggetIds.map(nuggetId => {
                     return Nugget.findById(nuggetId);
@@ -53,7 +53,7 @@ const UserType = new GraphQLObjectType({
         },
         likedNuggets: {
             type: new GraphQLList(NuggetType),
-            async resolve(parent, args){ //TODO: paginate
+            async resolve(parent, args, context){ //TODO: paginate
                 const user = await User.findById(parent.id);
                 return user.likedNuggetIds.map(nuggetId => {
                     return Nugget.findById(nuggetId);
@@ -136,7 +136,7 @@ const StreamType = new GraphQLObjectType({
         modifiedAt: { type: GraphQLString },
         nuggets: {
             type: new GraphQLList(NuggetType),
-            async resolve(parent, args){
+            async resolve(parent, args, context){
                 const stream = await Stream.findById(parent.id);
                 //assemble new stream if only twenty nuggets are left in current stream
                 if (stream.currentPosition+20 >= stream.nuggetIds.length) {
@@ -166,7 +166,7 @@ const NuggetType = new GraphQLObjectType({
         id: { type: GraphQLID },
         createdBy: { 
             type: UserType,
-            resolve(parent, args) {
+            resolve(parent, args, context) {
                 return User.findById(parent.creatorId);
             } 
         },
@@ -174,7 +174,7 @@ const NuggetType = new GraphQLObjectType({
         content: { type: GraphQLString }, //TODO: probably change to NuggetContentType
         metaInfo: {
             type: GraphQLString, //TODO: change to NuggetInfoType
-            resolve(parent, args) {
+            resolve(parent, args, context) {
                 return new Promise(async (resolve, reject) => {
                     const nugget = await Nugget.findById(parent.id);
                     //const result = [];
@@ -257,7 +257,7 @@ const RootQuery = new GraphQLObjectType({
         nugget: {
             type: NuggetType,
             args: { id: { type: GraphQLID } },
-            resolve(parent, args) {
+            resolve(parent, args, context) {
                 return Nugget.findById(args.id);
             }
         },
@@ -319,7 +319,7 @@ const Mutation = new GraphQLObjectType({
                 username: { type: new GraphQLNonNull(GraphQLString) },
                 topics: { type: new GraphQLList(GraphQLString) },
             },
-            async resolve(parent, args) {
+            async resolve(parent, args, context) {
                 console.log('#############################');
                 console.log('in addUser');
                 console.log(args.loginId);
@@ -408,7 +408,7 @@ const Mutation = new GraphQLObjectType({
                 source: { type: new GraphQLNonNull(GraphQLString) },
                 topic: { type: new GraphQLNonNull(GraphQLString) },
             },
-            async resolve(parent, args) {
+            async resolve(parent, args, context) {
                 try {
                     if(args.content.length >= 10 && args.creatorId === context.loggedInUser.name) { // prevent empty nuggets from being added
                         const creator = await User.findOne({ loginId: args.creatorId });
@@ -485,7 +485,7 @@ const Mutation = new GraphQLObjectType({
                 userId: { type: new GraphQLNonNull(GraphQLID) },
                 nuggetId: { type: new GraphQLNonNull(GraphQLID) },
             },
-            async resolve(parent, args) {
+            async resolve(parent, args, context) {
                 try {
                     const updatedUser = await User.findOneAndUpdate(
                         { _id: args.userId, loginId: context.loggedInUser.name }, 
@@ -503,7 +503,7 @@ const Mutation = new GraphQLObjectType({
                 userId: { type: new GraphQLNonNull(GraphQLID) },
                 nuggetId: { type: new GraphQLNonNull(GraphQLID) },
             },
-            async resolve(parent, args) {
+            async resolve(parent, args, context) {
                 try {
                     const updatedUser = await User.findOneAndUpdate(
                         { _id: args.userId, loginId: context.loggedInUser.name }, 
@@ -521,7 +521,7 @@ const Mutation = new GraphQLObjectType({
                 creatorId: { type: GraphQLID },
                 pass: { type: GraphQLString },
             },
-            async resolve(parent, args) {
+            async resolve(parent, args, context) {
                 if (args.pass !== "fruf*VOOB2boos9lat") {
                     return null;
                 }
@@ -592,7 +592,7 @@ const Mutation = new GraphQLObjectType({
                 category: { type: GraphQLString },
                 pass: { type: GraphQLString },
             },
-            async resolve(parent, args) {
+            async resolve(parent, args, context) {
                 if (args.pass !== "TIGH.touc5frad5day") {
                     return null;
                 }
