@@ -161,10 +161,14 @@ class _MyAppState extends State<MyApp> {
       await secureStorage.write(key: 'access_token', value: result.accessToken);
 
       String currentLoginId = idToken['name'];
+      print('loginAction currentLoginId');
+      print(currentLoginId);
       if (idToken['sub'].toString().contains('google')) {
+        print('loginAction if google');
         // is login via Google and loginId needs to be constructed
         currentLoginId = idToken['nickname'].toString() + '@gmail.com';
       }
+      print(currentLoginId);
       setState(() {
         isBusy = false;
         isLoggedIn = true;
@@ -262,10 +266,14 @@ class _MyAppState extends State<MyApp> {
           key: 'access_token', value: response.accessToken);
 
       String currentLoginId = idToken['name'];
+      print('initAction currentLoginId');
+      print(currentLoginId);
       if (idToken['sub'].toString().contains('google')) {
+        print('initAction if google');
         // is login via Google and loginId needs to be constructed
         currentLoginId = idToken['nickname'].toString() + '@gmail.com';
       }
+      print(currentLoginId);
       setState(() {
         isBusy = false;
         isLoggedIn = true;
