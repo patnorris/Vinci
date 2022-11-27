@@ -109,8 +109,8 @@ class MenuDrawer extends StatelessWidget {
                 fontSize: 15.0,
               ),
             ),
-            onTap: () {
-              logoutAction();
+            onTap: () async {
+              await logoutAction();
               Navigator.pushReplacementNamed(context, '/');
             },
           ),

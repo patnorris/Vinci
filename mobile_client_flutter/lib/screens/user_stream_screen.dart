@@ -144,18 +144,24 @@ class UserStreamScreen extends StatelessWidget {
         } else {
           print('UserStreamScreen result.data');
           print(result.data);
-          user = User.fromJson(result.data['userByLoginId']);
-          //final Map pageInfo = result.data['pageInfo'];
-          //print(result.data);
-          //print(result.data['user']['stream']['nuggets'].length);
-          username = user.username;
+          if (result.data['userByLoginId'] != null) {
+            user = User.fromJson(result.data['userByLoginId']);
+            //final Map pageInfo = result.data['pageInfo'];
+            //print(result.data);
+            //print(result.data['user']['stream']['nuggets'].length);
+            username = user.username;
 
-          body = TabBarView(
-            children: [
-              UserStreamView(
-                  user: user, fetchMore: fetchMore, fetchMoreOptions: opts),
-            ],
-          );
+            body = TabBarView(
+              children: [
+                UserStreamView(
+                    user: user, fetchMore: fetchMore, fetchMoreOptions: opts),
+              ],
+            );
+          } else {
+            body = const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
         }
 
         return DefaultTabController(

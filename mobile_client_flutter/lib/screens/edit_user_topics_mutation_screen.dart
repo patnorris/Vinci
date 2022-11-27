@@ -109,7 +109,8 @@ provide you a mix of everything worth learning""";
                         //List<String> names = values.map((e) => e.name).toList();
                         List<String> topics = values.toList();
                         if (topics.contains("Random")) {
-                          return "Random: a portion of Your Nuggets will be a random mix";
+                          return """Random: a portion of Your Nuggets will be 
+a random mix""";
                         }
                         return null;
                       },

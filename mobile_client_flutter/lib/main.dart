@@ -240,8 +240,11 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initAction() async {
+    print('in initAction');
     final String storedRefreshToken =
         await secureStorage.read(key: 'refresh_token');
+    print('in initAction storedRefreshToken');
+    print(storedRefreshToken);
     if (storedRefreshToken == null) return;
 
     setState(() {

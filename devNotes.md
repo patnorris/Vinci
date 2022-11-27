@@ -72,3 +72,10 @@ https://flutter-examples.com/run-test-flutter-apps-directly-on-real-android-devi
 release build: https://flutter.dev/docs/deployment/android
 run release mode: https://stackoverflow.com/questions/56179353/app-running-on-debug-mode-only-for-flutter
 
+Sometimes nugget scrolls down automatically:
+scrollview keeps the scroll value from previous nugget, e.g. on nugget 1 user scrolled til the bottom, then swipes away, nugget 2 will start at the same offset
+--> reset scroll value for each new nugget, i.e. after swipe
+https://www.codegrepper.com/code-examples/dart/how+to+stop+auto+scroll+listview+flutter: physics: NeverScrollableScrollPhysics()
+https://github.com/flutter/flutter/issues/50713: showCursor: false, allowImplicitScrolling: false
+https://github.com/flutter/flutter/issues/27887: use _scrollController.jumpTo(_scrollController.position.minScrollExtent);
+https://www.google.com/search?q=flutter+access+primary+scrollcontroller&ei=CiXqYN-kGIHEsAX27LvIDA&oq=flutter+access+primary+scrollcontroller&gs_lcp=Cgdnd3Mtd2l6EAM6BwgAEEcQsAM6BwgAELADEEM6BAgAEA06BAghEAo6BQgAEM0CSgQIQRgAUJm2UVihylFg98tRaANwAngAgAGIAogBmxKSAQYzLjEwLjOYAQCgAQGqAQdnd3Mtd2l6yAEKwAEB&sclient=gws-wiz&ved=0ahUKEwjf0cedzNnxAhUBIqwKHXb2DskQ4dUDCA4&uact=5

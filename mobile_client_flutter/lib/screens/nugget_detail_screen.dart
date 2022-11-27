@@ -116,7 +116,7 @@ class NuggetDetailScreen extends StatelessWidget {
                             'nuggetId': nuggetId,
                           });
                         },
-                        child: Text("Remove This Nugget from My Saved Nuggets"),
+                        child: Text("Remove from My Saved Nuggets"),
                         shape: CircleBorder(
                             side: BorderSide(color: Colors.transparent)),
                       ),

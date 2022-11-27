@@ -32,7 +32,6 @@ const context = async req => {
       console.log('in context response.data');
       console.log(response.data);
       console.log(response.data.toString());
-      console.log(response.data.toString().includes('google'));
       if (response.data.sub.toString().includes('google')) {
         console.log('in context if google');
         console.log(response.data.nickname.toString());
