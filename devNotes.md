@@ -94,3 +94,9 @@ static List<Animal> _animals = [
     Animal(id: 1, name: "Lion"),
     Animal(id: 2, name: "Flamingo"),
   ];
+
+upgrading flutter (attempted on 2022-11-28):
+requires changing deprecated elements (e.g. FlatButton)
+requires platform dependency
+requires updating Android
+probably (potentially many) more changes required as many files had many red highlights
