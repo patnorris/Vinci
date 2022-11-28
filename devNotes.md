@@ -79,3 +79,18 @@ https://www.codegrepper.com/code-examples/dart/how+to+stop+auto+scroll+listview+
 https://github.com/flutter/flutter/issues/50713: showCursor: false, allowImplicitScrolling: false
 https://github.com/flutter/flutter/issues/27887: use _scrollController.jumpTo(_scrollController.position.minScrollExtent);
 https://www.google.com/search?q=flutter+access+primary+scrollcontroller&ei=CiXqYN-kGIHEsAX27LvIDA&oq=flutter+access+primary+scrollcontroller&gs_lcp=Cgdnd3Mtd2l6EAM6BwgAEEcQsAM6BwgAELADEEM6BAgAEA06BAghEAo6BQgAEM0CSgQIQRgAUJm2UVihylFg98tRaANwAngAgAGIAogBmxKSAQYzLjEwLjOYAQCgAQGqAQdnd3Mtd2l6yAEKwAEB&sclient=gws-wiz&ved=0ahUKEwjf0cedzNnxAhUBIqwKHXb2DskQ4dUDCA4&uact=5
+
+example for class in flutter:
+class Animal {
+  final int id;
+  final String name;
+
+  Animal({
+    this.id,
+    this.name,
+  });
+}
+static List<Animal> _animals = [
+    Animal(id: 1, name: "Lion"),
+    Animal(id: 2, name: "Flamingo"),
+  ];

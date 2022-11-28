@@ -29,19 +29,19 @@ const context = async req => {
     if (!loggedInUsers[req.headers.authorization]) {
       const url = `https://${AUTH0_DOMAIN}/userinfo`;
       const response = await axios.get(url, { headers: { Authorization: `${req.headers.authorization}` } });
-      console.log('in context response.data');
-      console.log(response.data);
-      console.log(response.data.toString());
+      // console.log('in context response.data');
+      // console.log(response.data);
+      // console.log(response.data.toString());
       if (response.data.sub.toString().includes('google')) {
-        console.log('in context if google');
-        console.log(response.data.nickname.toString());
+        // console.log('in context if google');
+        // console.log(response.data.nickname.toString());
         response.data.name = response.data.nickname.toString().concat('@gmail.com');
       }
-      console.log(response.data);
+      // console.log(response.data);
       loggedInUsers[req.headers.authorization] = response.data;
     }
-    console.log('in context loggedInUsers[req.headers.authorization]');
-    console.log(loggedInUsers[req.headers.authorization]);  
+    // console.log('in context loggedInUsers[req.headers.authorization]');
+    // console.log(loggedInUsers[req.headers.authorization]);  
     return { loggedInUser: loggedInUsers[req.headers.authorization] };
   } catch (error) {
     console.log('error in context');

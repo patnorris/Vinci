@@ -161,14 +161,10 @@ class _MyAppState extends State<MyApp> {
       await secureStorage.write(key: 'access_token', value: result.accessToken);
 
       String currentLoginId = idToken['name'];
-      print('loginAction currentLoginId');
-      print(currentLoginId);
       if (idToken['sub'].toString().contains('google')) {
-        print('loginAction if google');
         // is login via Google and loginId needs to be constructed
         currentLoginId = idToken['nickname'].toString() + '@gmail.com';
       }
-      print(currentLoginId);
       setState(() {
         isBusy = false;
         isLoggedIn = true;
@@ -205,10 +201,10 @@ class _MyAppState extends State<MyApp> {
     try {
       final result = await InternetAddress.lookup('example.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        print('connected');
-        // print(result);
+        print('connected to Internet');
         return;
       } else {
+        print('cannot connect to Internet');
         return showDialog(
             //barrierColor: Colors.white.withOpacity(0),
             barrierColor: Colors.transparent,
@@ -223,7 +219,7 @@ class _MyAppState extends State<MyApp> {
             });
       }
     } on SocketException catch (_) {
-      print('not connected');
+      print('not connected to Internet');
       return showDialog(
           //barrierColor: Colors.white.withOpacity(0),
           barrierColor: Colors.transparent,
@@ -240,11 +236,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initAction() async {
-    print('in initAction');
     final String storedRefreshToken =
         await secureStorage.read(key: 'refresh_token');
-    print('in initAction storedRefreshToken');
-    print(storedRefreshToken);
     if (storedRefreshToken == null) return;
 
     setState(() {
@@ -269,14 +262,10 @@ class _MyAppState extends State<MyApp> {
           key: 'access_token', value: response.accessToken);
 
       String currentLoginId = idToken['name'];
-      print('initAction currentLoginId');
-      print(currentLoginId);
       if (idToken['sub'].toString().contains('google')) {
-        print('initAction if google');
         // is login via Google and loginId needs to be constructed
         currentLoginId = idToken['nickname'].toString() + '@gmail.com';
       }
-      print(currentLoginId);
       setState(() {
         isBusy = false;
         isLoggedIn = true;
@@ -398,8 +387,6 @@ class WelcomePageState extends State<WelcomePage> {
               child: CircularProgressIndicator(),
             );
           } else {
-            print('WelcomePageState result.data');
-            print(result.data);
             if (result.data['userByLoginId'] != null) {
               user = User.fromJson(result.data['userByLoginId']);
               if (user != null) {
@@ -407,7 +394,6 @@ class WelcomePageState extends State<WelcomePage> {
                     loginId: loginId, logoutAction: logoutAction);
               }
             } else {
-              print('WelcomePageState new user');
               // new user; initiate sign up flow
               body = CreateUserProfileMutationScreen(loginId: loginId);
 
@@ -466,7 +452,6 @@ class CreateUserProfileMutationScreen extends StatelessWidget {
           RunMutation runMutation,
           QueryResult result,
         ) {
-          print('CreateUserProfileMutationScreen');
           List<String> availableTopics = getAvailableTopics();
           final _items = availableTopics
               .map((topic) => MultiSelectItem<String>(topic, topic))
@@ -534,10 +519,6 @@ provide you a mix of everything worth learning""";
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
                             // run mutation to create User profile in DB
-                            print('before creating user loginId');
-                            print(loginId);
-                            print(formData['username']);
-                            print(selectedTopics);
                             runMutation({
                               'loginId': loginId,
                               'username': formData['username'],

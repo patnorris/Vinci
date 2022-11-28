@@ -77,7 +77,6 @@ class UserSavedNuggetsScreen extends StatelessWidget {
             );
           }
 
-          //print(result.data);
           final User user = User.fromJson(result.data['userByLoginId']);
 
           if (user.savedNuggets.length == 0) {

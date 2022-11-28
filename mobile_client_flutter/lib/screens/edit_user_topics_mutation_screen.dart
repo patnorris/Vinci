@@ -1,5 +1,5 @@
 import 'package:client_flutter/helpers/helpers.dart';
-import 'package:client_flutter/widgets/alert_box.dart';
+// import 'package:client_flutter/widgets/alert_box.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:client_flutter/model/model.dart';
@@ -15,16 +15,6 @@ final editUserTopicsQuery = gql("""
       }        
   }
 """);
-
-/* class Animal {
-  final int id;
-  final String name;
-
-  Animal({
-    this.id,
-    this.name,
-  });
-} */
 
 class EditUserTopicsMutationScreen extends StatefulWidget {
   EditUserTopicsMutationScreen({Key key, @required this.user})
@@ -43,10 +33,6 @@ class _EditUserTopicsMutationState extends State<EditUserTopicsMutationScreen> {
     @required this.user,
   });
 
-  /* static List<Animal> _animals = [
-    Animal(id: 1, name: "Lion"),
-    Animal(id: 2, name: "Flamingo"),
-  ]; */
   static List<String> availableTopics = getAvailableTopics();
   final _items = availableTopics
       .map((topic) => MultiSelectItem<String>(topic, topic))

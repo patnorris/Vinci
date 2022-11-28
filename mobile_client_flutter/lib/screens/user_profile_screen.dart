@@ -117,11 +117,6 @@ class UserTextView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /* user.contact ??= 'This user hasn\'t provided any contact info yet...';
-    user.profilePicture ??= 'This user doesn\'t have a profile picture...';
-    String userMemberships = user.memberships.isEmpty
-        ? 'This user is not a member in any club yet...'
-        : user.memberships.join(', '); */
     return Container(
         color: Colors.indigo[100],
         alignment: Alignment.topLeft,

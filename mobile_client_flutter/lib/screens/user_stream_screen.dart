@@ -113,8 +113,8 @@ class UserStreamScreen extends StatelessWidget {
           //variables: {'cursor': fetchMoreCursor},
           updateQuery: (previousResultData, fetchMoreResultData) {
             // this is where you combine your previous data and response
-            // in this case, we want to display previous repos plus next repos
-            // so, we combine data in both into a single list of repos
+            // in this case, we want to display previous nuggets plus next nuggets
+            // so, we combine data from both into a single list of nuggets
             final List<dynamic> nuggets = [
               ...previousResultData['userByLoginId']['stream']['nuggets']
                   as List<dynamic>,
@@ -122,16 +122,17 @@ class UserStreamScreen extends StatelessWidget {
                   as List<dynamic>
             ];
 
-            // to avoid alot of work, lets just update the list of repos in returned
-            // data with new data, this also ensure we have the endCursor already set
-            // correctlty
+            // to avoid a lot of work, let's just update the list of nuggets in returned
+            // data with new data, this also ensures we have the endCursor already set
+            // correctly
             fetchMoreResultData['userByLoginId']['stream']['nuggets'] = nuggets;
 
             return fetchMoreResultData;
           },
         );
-        print('UserStreamScreen');
         if (result.hasException) {
+          print('UserStreamScreen hasException');
+          print(result.exception.toString());
           body = AlertBox(
             type: AlertType.error,
             text: result.exception.toString(),
@@ -142,15 +143,9 @@ class UserStreamScreen extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else {
-          print('UserStreamScreen result.data');
-          print(result.data);
           if (result.data['userByLoginId'] != null) {
             user = User.fromJson(result.data['userByLoginId']);
-            //final Map pageInfo = result.data['pageInfo'];
-            //print(result.data);
-            //print(result.data['user']['stream']['nuggets'].length);
             username = user.username;
-
             body = TabBarView(
               children: [
                 UserStreamView(
@@ -245,8 +240,6 @@ class _UserStreamViewState extends State<UserStreamView>
     //String mutationToRun = '';
     //int streamIndex = 0;
     if (streamIndex > user.stream.nuggets.length) {
-      //print('if streamIndex ${streamIndex}');
-      //print('if length ${user.stream.nuggets.length}');
       streamIndex = 0;
     }
 
@@ -262,9 +255,6 @@ class _UserStreamViewState extends State<UserStreamView>
               initialData: user.stream.nuggets.sublist(streamIndex),
               builder:
                   (BuildContext context, AsyncSnapshot<List<Nugget>> snapshot) {
-                //print('snapshot.data.length: ${snapshot.data.length}');
-                //print('StreamBuilder nuggets length ${user.stream.nuggets.length}');
-                //print(snapshot.data);
                 if (snapshot.hasError) return Text('Error: ${snapshot.error}');
                 switch (snapshot.connectionState) {
                   case ConnectionState.none:
@@ -289,11 +279,8 @@ class _UserStreamViewState extends State<UserStreamView>
                       minWidth: MediaQuery.of(context).size.width * 0.85,
                       minHeight: MediaQuery.of(context).size.height * 0.8,
                       cardBuilder: (context, index) {
-                        //print('cardBuilder index ${index}');
                         return GestureDetector(
                           onDoubleTap: () {
-                            //print('Double Tap');
-                            //print(snapshot.data[index].metaInfo);
                             launch(snapshot.data[index].metaInfo);
                             /* if (canLaunch(snapshot.data[index].metaInfo != false)) {
                                 launch(snapshot.data[index].metaInfo);
@@ -330,13 +317,13 @@ class _UserStreamViewState extends State<UserStreamView>
                                         ? Expanded(
                                             child: Image.asset(
                                                 '${welcomeImages[0]}'),
-                                          ) //TODO
+                                          ) //TODO: allow image content
                                         : snapshot.data[index].nuggetType
                                                 .contains("VIDEO")
                                             ? Expanded(
                                                 child: Image.asset(
                                                     '${welcomeImages[0]}'),
-                                              ) //TODO
+                                              ) //TODO: allow video content
                                             : Text(
                                                 'So little we know, so eager to learn'),
                               ],
@@ -348,7 +335,7 @@ class _UserStreamViewState extends State<UserStreamView>
                       swipeUpdateCallback:
                           (DragUpdateDetails details, Alignment align) {
                         /// Get swiping card's alignment
-                        /// potentially show icons (save on bottom, share on top, like on right, next on left)
+                        /// TODO: potentially show icons (save on bottom, share on top, like on right, next on left)
                         if (align.x < 0) {
                           //print("Card is LEFT swiping");
                         } else if (align.x > 0) {
@@ -357,7 +344,6 @@ class _UserStreamViewState extends State<UserStreamView>
                       },
                       swipeCompleteCallback:
                           (CardSwipeOrientation orientation, int index) {
-                        //print(orientation.toString());
                         if (orientation == CardSwipeOrientation.left) {
                           //print("LEFT swipe: next");
                           Timer _timer;
@@ -373,7 +359,6 @@ class _UserStreamViewState extends State<UserStreamView>
                                 return Opacity(
                                   child: AlertDialog(
                                     backgroundColor: Colors.white,
-                                    //title: Text('Nugget Saved!'),
                                     content: NextNuggetMutation(
                                       userId: user.id,
                                       nuggetId: snapshot.data[index].id,
@@ -387,9 +372,7 @@ class _UserStreamViewState extends State<UserStreamView>
                               _timer.cancel();
                             }
                             streamIndex++;
-                            //print('streamIndex ${streamIndex}');
                             if (snapshot.data.length - index < 6) {
-                              //print('index ${index}');
                               fetchMore(fetchMoreOptions);
                             }
                           });
@@ -410,7 +393,6 @@ class _UserStreamViewState extends State<UserStreamView>
                                 return Opacity(
                                   child: AlertDialog(
                                     backgroundColor: Colors.white,
-                                    //title: Text('Nugget Saved!'),
                                     content: NextNuggetMutation(
                                       userId: user.id,
                                       nuggetId: snapshot.data[index].id,
@@ -425,7 +407,6 @@ class _UserStreamViewState extends State<UserStreamView>
                             }
                             streamIndex++;
                             if (snapshot.data.length - index < 6) {
-                              //print('index ${index}');
                               fetchMore(fetchMoreOptions);
                             }
                           });
@@ -446,7 +427,6 @@ class _UserStreamViewState extends State<UserStreamView>
                                 return Opacity(
                                   child: AlertDialog(
                                     backgroundColor: Colors.white,
-                                    //title: Text('Nugget Saved!'),
                                     content: SaveNuggetMutation(
                                         userId: user.id,
                                         nuggetId: snapshot.data[index].id),
@@ -459,17 +439,16 @@ class _UserStreamViewState extends State<UserStreamView>
                             }
                             streamIndex++;
                             if (snapshot.data.length - index < 6) {
-                              //print('index ${index}');
                               fetchMore(fetchMoreOptions);
                             }
                           });
                           /* user.stream.nuggets.removeAt(index);
                       _streamController.add(user.stream.nuggets); */
                         } else if (orientation == CardSwipeOrientation.up) {
+                          // TODO: implement share functionality
                           //print("UP swipe: share");
                           streamIndex++;
                           if (snapshot.data.length - index < 6) {
-                            //print('index ${index}');
                             fetchMore(fetchMoreOptions);
                           }
                           /* user.stream.nuggets.removeAt(0);
@@ -477,7 +456,6 @@ class _UserStreamViewState extends State<UserStreamView>
                         } else if (orientation ==
                             CardSwipeOrientation.recover) {
                           //print("RECOVER: not fully swiped into one direction");
-                          //print('index ${index}');
                         }
                       },
                     );

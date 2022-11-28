@@ -1,5 +1,5 @@
 import 'package:client_flutter/model/model.dart';
-import 'package:client_flutter/widgets/alert_box.dart';
+// import 'package:client_flutter/widgets/alert_box.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:client_flutter/helpers/helpers.dart';
@@ -209,11 +209,11 @@ class NuggetDetailView extends StatelessWidget {
                         //? Image.memory(BASE64.decode(user.stream.nuggets[index].content))
                         ? Expanded(
                             child: Image.asset("assets/images/vinci.png"),
-                          ) //TODO
+                          ) //TODO: allow image content
                         : nugget.nuggetType.contains("VIDEO")
                             ? Expanded(
                                 child: Image.asset("assets/images/vinci.png"),
-                              ) //TODO
+                              ) //TODO: allow video content
                             : Text('So little we know, so eager to learn'),
               ],
             ),

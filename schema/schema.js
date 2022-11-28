@@ -13,7 +13,7 @@ const {
     GraphQLEnumType
 } = graphql;
 
-//Schema defines data on the Graph like object types(book type), relation between 
+//Schema defines data on the Graph like object types, relation between 
 //these object types and describes how it can reach into the graph to interact with 
 //the data to retrieve or mutate the data   
 
@@ -113,7 +113,7 @@ async function assembleNewStream(currentStream) { //TODO: put job into queue and
             newNuggetIds = newNuggetIds.concat(topicNuggets.map(nugget => { return nugget._id.toString(); }));
         }
     }
-    // random shuffle new nuggets
+    // randomly shuffle new nuggets
     newNuggetIds = newNuggetIds.concat(savedAndLikedNuggetIdsByUser);
     shuffle(newNuggetIds);
     // keep the last ten nuggets of the current stream (unseen so far)
@@ -219,7 +219,7 @@ const NuggetInfoType = new GraphQLObjectType({
     })
 });
 
-//RootQuery describe how users can use the graph and grab data.
+//RootQuery describes how users can use the graph and grab data.
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
@@ -240,17 +240,12 @@ const RootQuery = new GraphQLObjectType({
             type: UserType,
             args: { loginId: { type: GraphQLString } },
             resolve(parent, args, context) {
-                // console.log('in userByLoginId');
-                // console.log(args.loginId);
-                // console.log(context.loggedInUser.name);
                 // secure query
                 // only user themself can retrieve
                 if (args.loginId === context.loggedInUser.name) {
-                    // console.log('in if');
                     // if no entry found, null will be returned (i.e. new user)
                     return User.findOne({ loginId: args.loginId });
                 }
-                // console.log('after if');
                 return null;
             }
         },
@@ -297,7 +292,7 @@ async function assembleInitialStream(newUser, newUserStream) {
             newNuggetIds = newNuggetIds.concat(topicNuggets.map(nugget => { return nugget._id.toString(); }));
         }
     }
-    // random shuffle new nuggets
+    // randomly shuffle new nuggets
     shuffle(newNuggetIds);
     // assemble all nuggets into one new stream (with the Vinci Welcome Nuggets as first)
     const newStream = ["6068ee5ea2fb59441c185003", "6068f120a2fb59441c185004"].concat(newNuggetIds);
@@ -308,7 +303,7 @@ async function assembleInitialStream(newUser, newUserStream) {
     return true;
 }
  
-//Very similar to RootQuery helps user to add/update to the database.
+//Very similar to RootQuery, helps user to add to/update the database.
 const Mutation = new GraphQLObjectType({
     name: 'Mutation',
     fields: {
@@ -321,13 +316,13 @@ const Mutation = new GraphQLObjectType({
             },
             async resolve(parent, args, context) {
                 console.log('#############################');
-                console.log('in addUser');
+                console.log('###in addUser');
                 console.log(args.loginId);
                 console.log(args.username);
                 console.log(args.topics);
                 console.log(context.loggedInUser.name);
                 if (args.loginId === context.loggedInUser.name) {
-                    console.log('in addUser if');
+                    console.log('###in addUser if');
                     try {
                         const user = new User({
                             username: args.username,
@@ -338,7 +333,7 @@ const Mutation = new GraphQLObjectType({
                             selectedTopics: args.topics ? args.topics : [],
                         });
                         const createdUser = await user.save();
-                        console.log('createdUser');
+                        console.log('###createdUser');
                         // create a stream for the user with some initial nuggets
                         const userStream = new Stream({
                             userId: createdUser.id,
@@ -346,9 +341,9 @@ const Mutation = new GraphQLObjectType({
                             currentPosition: 0,
                         });
                         const createdStream = await userStream.save();
-                        console.log('createdStream');
+                        console.log('###createdStream');
                         await assembleInitialStream(createdUser, createdStream);
-                        console.log('assembleInitialStream');
+                        console.log('###assembleInitialStream');
                         return createdUser;                 
                     } catch (error) {
                         console.log('error in addUser');
@@ -675,7 +670,7 @@ const Mutation = new GraphQLObjectType({
 });
 
 //Creating a new GraphQL Schema, with options query which defines query 
-//we will allow users to use when they are making request.
+//we will allow users to use when they are making requests.
 module.exports = new GraphQLSchema({
     query: RootQuery,
     mutation: Mutation

@@ -1,9 +1,9 @@
-import 'package:client_flutter/helpers/helpers.dart';
-import 'package:client_flutter/widgets/alert_box.dart';
+// import 'package:client_flutter/helpers/helpers.dart';
+// import 'package:client_flutter/widgets/alert_box.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:client_flutter/model/model.dart';
-import 'package:client_flutter/widgets/menu_drawer.dart';
+// import 'package:client_flutter/widgets/menu_drawer.dart';
 
 final editUserProfileQuery = gql("""
   mutation editUserProfile(\$userId: ID!, \$username: String!) {
