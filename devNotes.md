@@ -71,6 +71,7 @@ load to phone: https://stackoverflow.com/questions/54444538/how-do-i-run-test-my
 https://flutter-examples.com/run-test-flutter-apps-directly-on-real-android-device/
 release build: https://flutter.dev/docs/deployment/android
 run release mode: https://stackoverflow.com/questions/56179353/app-running-on-debug-mode-only-for-flutter
+e.g. flutter run -d 71b653b5 --release (on phone connected via cable)
 
 Sometimes nugget scrolls down automatically:
 scrollview keeps the scroll value from previous nugget, e.g. on nugget 1 user scrolled til the bottom, then swipes away, nugget 2 will start at the same offset

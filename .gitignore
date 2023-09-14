@@ -11,3 +11,6 @@ nodemon.json
 # Docker
 Dockerfile
 docker-compose.yml
+
+**/**/key.properties
+**/key.properties

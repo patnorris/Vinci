@@ -17,6 +17,7 @@ web needs to implement the authentication flow
 4. `flutter run` to launch your app in debug mode. Or use the Flutter tools in your IDE.
 e.g. flutter run -d emulator-5554 (for Android Studio > AVD Manager > run emulator)
 flutter run -d chrome (web, opens Chrome window)
+flutter run -d 71b653b5 --release (on phone connected via cable)
 
 ## Build
 
